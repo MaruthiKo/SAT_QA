@@ -1,33 +1,23 @@
-from langchain.vectorstores import FAISS
-from langchain.llms import GooglePalm
-from langchain.document_loaders.csv_loader import CSVLoader
-from langchain.embeddings import HuggingFaceInstructEmbeddings
-from langchain.prompts import PromptTemplate
-from langchain.chains import RetrievalQA
-import os
+import streamlit as st
+from langchain_helper import get_qa_chain, create_vector_db
 
-from dotenv import load_dotenv
-load_dotenv()  # take environment variables from .env (especially openai api key)
+st.title("SAT QA 🧑‍🎓")
+st.caption('This QA app can currently help you with questions related to __:green[world_history]__ and  __:green[us_history]__')
+# btn = st.button("Create Knowledge Base")
 
-# Create Google Palm LLM model
-llm = GooglePalm(google_api_key=os.environ["GOOGLE_API_KEY"], temperature=0.1)
-# # Initialize instructor embeddings using the Hugging Face model
-instructor_embeddings = HuggingFaceInstructEmbeddings(model_name="hkunlp/instructor-large")
-vectordb_file_path = "faiss_index"
+# if btn:
+#     pass
+flag = 1
+question = st.text_input("Question: ")
 
-def create_vector_db():
-    # Load data from FAQ sheet
-    loader = CSVLoader(file_path='question_answer.csv', source_column="question")
-    data = loader.load()
+if question:
+    chain = get_qa_chain()
+    response = chain(question) # returns a list of answers
+    flag = 0
+    st.header("Answer:")
+    st.write(response["result"])
 
-    # Create a FAISS instance for vector database from 'data'
-    vectordb = FAISS.from_documents(documents=data,
-                                    embedding=instructor_embeddings)
-
-    # Save vector database locally
-    vectordb.save_local(vectordb_file_path)
-
-if __name__ == "__main__":
-    create_vector_db() # Create vector database only when there is a change in the csv file
-    # chain = get_qa_chain()
-    # print(chain("Do you have javascript course?"))
+if flag:
+    st.subheader("Example Question: ")
+    code = '''Who developed and taught the doctrine of predestination?'''
+    st.code(code, language=None)
