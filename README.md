@@ -1,6 +1,6 @@
 # SAT Q&A: Question Answering System based on Google Palm LLM and langchain for SAT questions on world_history and us_history  
 
-This is an end to end LLM project based on Google Palm and Langchain. We are building a Q&A system for students preparing for SAT examination. SAT is a standardized test widely used for college admissions in the United States. This system will provide a streamlit based user interface for students where they can ask questions and get answers. Currently the application is focused on questions related to **us_history** and **world_history**
+This is an end to end LLM project based on Google Palm and Langchain. I have built a Q&A system for students preparing for SAT examination. SAT is a standardized test widely used for college admissions in the United States. This system will provide a streamlit based user interface for students where they can ask questions and get answers. Currently the application is focused on questions related to **us_history** and **world_history**
 
 ## Project Architecture
 
