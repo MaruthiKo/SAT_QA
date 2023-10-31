@@ -15,7 +15,7 @@ if question:
     response = chain(question) # returns a list of answers
     flag = 0
     st.header("Answer:")
-    st.write(response["result"])
+    st.code(response["result"], language=None)
 
 if flag:
     st.subheader("Example Question: ")
